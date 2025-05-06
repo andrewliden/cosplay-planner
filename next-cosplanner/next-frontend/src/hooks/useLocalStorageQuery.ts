@@ -24,31 +24,43 @@ export default function useLocalStorageQuery<T=unknown>(key: string, validator: 
     const [data, setData] = useState<T|null>(null);
     const [errorData, setErrorData] = useState<unknown|null>(null);
     useEffect(() => {
-        setStatus(1);
-        if(typeof window !== 'undefined') {
-            const loadedData = window.localStorage.getItem(key);
-            if(loadedData === null) {
-                setStatus(2);
-                setData(defaultValue);
-                setErrorData(null);
-            } else {
-                try {
-                    const parsedData = JSON.parse(loadedData) as unknown;
-                    if(validator(parsedData)) {
-                        setStatus(2);
-                        setData(parsedData);
-                        setErrorData(null);
-                    } else {
+        const fetchData = () => {
+            setStatus(1);
+            if(typeof window !== 'undefined') {
+                const loadedData = window.localStorage.getItem(key);
+                if(loadedData === null) {
+                    setStatus(2);
+                    setData(defaultValue);
+                    setErrorData(null);
+                } else {
+                    try {
+                        const parsedData = JSON.parse(loadedData) as unknown;
+                        if(validator(parsedData)) {
+                            setStatus(2);
+                            setData(parsedData);
+                            setErrorData(null);
+                        } else {
+                            setStatus(3);
+                            setData(null);
+                            setErrorData(new Error('Invalid data'));
+                        }
+                    } catch(e) {
                         setStatus(3);
                         setData(null);
-                        setErrorData(new Error('Invalid data'));
+                        setErrorData(e);
                     }
-                } catch(e) {
-                    setStatus(3);
-                    setData(null);
-                    setErrorData(e);
                 }
             }
+        };
+        fetchData();
+        if(typeof window !== 'undefined') {
+            const updateOnStorageChange = (e: StorageEvent) => {
+                if(e.key === 'key') {
+                    fetchData();
+                }
+            }
+            window.addEventListener('storage', updateOnStorageChange);
+            return () => {window.removeEventListener('storage', updateOnStorageChange);};
         }
     }, [key, validator]);
 
