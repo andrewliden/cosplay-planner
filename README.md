@@ -1,6 +1,6 @@
 # Project Goals
 
-1. Make a standalone frontend in Next.js with local storage. It should have the following features.
+1. Make a standalone frontend in Next.js with server state as a storage mechanism. It should have the following features.
     1. Users can create, update, and delete a cosplay instance. They can also read one from local storage.
     2. Cosplay instances should have the following attributes:
         1. Name
