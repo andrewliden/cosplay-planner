@@ -30,12 +30,14 @@ export default function useLocalStorageQuery<T=unknown>(key: string, validator: 
             if(loadedData === null) {
                 setStatus(2);
                 setData(defaultValue);
+                setErrorData(null);
             } else {
                 try {
                     const parsedData = JSON.parse(loadedData) as unknown;
                     if(validator(parsedData)) {
                         setStatus(2);
                         setData(parsedData);
+                        setErrorData(null);
                     } else {
                         setStatus(3);
                         setData(null);
@@ -53,6 +55,7 @@ export default function useLocalStorageQuery<T=unknown>(key: string, validator: 
     return {
         status,
         ...getStatusObject(status),
-        data
+        data,
+        errorData
     }
 }
