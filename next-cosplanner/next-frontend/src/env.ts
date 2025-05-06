@@ -1,0 +1,1 @@
+export const HOSTED_AT = process.env.HOSTED_AT ?? 'http://localhost:3000';

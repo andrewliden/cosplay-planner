@@ -17,7 +17,14 @@ interface ServerState {
 }
 
 const serverState: ServerState = {
-    cosplays: [],
+    cosplays: [
+        {
+            id: 1,
+            name: 'Test cosplay',
+            description: 'This is a test!',
+            referenceImage: null
+        }
+    ],
     cosplayParts: [],
     materials: [],
     events: []

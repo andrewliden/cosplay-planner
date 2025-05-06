@@ -1,10 +1,10 @@
 import serverState from "../serverState";
 
-export function GET(){
-    
-    return new Response('WIP');
+export async function GET(){
+    const {cosplays} = serverState;
+    return Response.json(cosplays);
 }
 
-export function POST(){
+export async function POST(){
     return new Response('WIP');
 }
