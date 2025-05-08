@@ -15,7 +15,7 @@ const navPages = [
 
 export default function AppBar(){
     return (
-        <header className='w-screen bg-purple-950 text-white'>
+        <header className='w-screen bg-primary-700 text-white'>
             <nav className='mx-auto max-w-3xl flex gap-2'>
                 {navPages.map(({href, label}) =>
                     <a href={href} key={href}>
