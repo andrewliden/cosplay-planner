@@ -9,15 +9,35 @@ export default function CreateNewCosplay(){
                 <h2 className='text-xl'>
                     Create a new cosplay
                 </h2>
+                <div>
+                    <label className='flex flex-col'>
+                        Name
+                        <input
+                            required
+                        />
+                    </label>
+                    <label className='flex flex-col'>
+                        Description
+                        <textarea
+                            required
+                        />
+                    </label>
+                    <label className='flex flex-col'>
+                        Reference image
+                        <input
+                            type='url'
+                        />
+                    </label>
+                </div>
                 <div className='flex justify-end gap-2'>
                     <button
-                        className='rounded-lg p-2 bg-gray-500 hover:bg-gray-400 text-white'
+                        className='rounded-lg p-2 bg-secondary-500 hover:bg-secondary-400 text-white'
                         onClick={() => {setIsCreating(false);}}
                     >
                         Cancel
                     </button>
                     <button
-                        className='rounded-lg p-2 bg-blue-500 hover:bg-blue-400 text-white'
+                        className='rounded-lg p-2 bg-primary-500 hover:bg-primary-400 text-white'
                         type='submit'
                     >
                         Create
@@ -28,7 +48,7 @@ export default function CreateNewCosplay(){
     } else {
         return (
             <button
-                className='rounded-lg p-2 bg-blue-500 hover:bg-blue-400 text-white'
+                className='rounded-lg p-2 bg-primary-500 hover:bg-primary-400 text-white'
                 onClick={() => {setIsCreating(true);}}
             >
                 Create a new cosplay
