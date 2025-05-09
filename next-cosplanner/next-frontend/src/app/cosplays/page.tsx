@@ -1,3 +1,4 @@
+'use server'
 import type Cosplay from "@/type-definitions/Cosplay";
 import { HOSTED_AT } from "@/env";
 import ContentBox from "@/components/ContentBox";
