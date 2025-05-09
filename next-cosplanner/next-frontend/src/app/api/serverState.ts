@@ -1,3 +1,4 @@
+'use server'
 import type Cosplay from "@/type-definitions/Cosplay";
 import type CosplayPart from "@/type-definitions/CosplayPart";
 import type Material from "@/type-definitions/Material";
