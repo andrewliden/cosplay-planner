@@ -1,3 +1,5 @@
+import os
+import warnings
 """
 Django settings for cosplayplanner project.
 
@@ -20,7 +22,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-42nl&kld3r20rs!dhl2-+)32%s)o4vv-7*an0o-=-lilkwv6_c'
+DEVELOPMENT_SECRETKEY = 'django-insecure-42nl&kld3r20rs!dhl2-+)32%s)o4vv-7*an0o-=-lilkwv6_c'
+
+def get_secret_key():
+    secret_from_env = os.environ.get('DJANGO_SECRET_KEY')
+    if os.environ.get('DJANGO_SECRET_KEY'):
+        return secret_from_env
+    else:
+        warnings.warn('USING DEVELOPMENT KEY. DO NOT ALLOW THIS IN PRODUCTION')
+        return DEVELOPMENT_SECRETKEY
+
+SECRET_KEY = get_secret_key()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -30,6 +42,10 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+USER_APPS = [
+    'cosplayplanner.models'
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    *USER_APPS
 ]
 
 MIDDLEWARE = [

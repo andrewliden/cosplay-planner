@@ -1,6 +1,6 @@
 import graphene
 from graphene_django import DjangoObjectType
-from ..models.cosplay import Cosplay
+from cosplayplanner.models.cosplay import Cosplay
 
 class CosplayType(DjangoObjectType):
     class Meta:

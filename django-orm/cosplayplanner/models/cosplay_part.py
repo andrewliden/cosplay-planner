@@ -1,7 +1,7 @@
 from django.db import models
-from .cosplay import Cosplay
+from cosplayplanner.models.cosplay import Cosplay
 
-class Cosplay(models.Model):
+class CosplayPart(models.Model):
     cosplay_id = models.ForeignKey(Cosplay)
     name = models.TextField()
     description = models.TextField()
