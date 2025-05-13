@@ -1,8 +1,5 @@
-import serverState from "../serverState";
-
 export async function GET(){
-    const {cosplays} = serverState;
-    return Response.json(cosplays);
+    return Response.json([]);
 }
 
 export async function POST(){

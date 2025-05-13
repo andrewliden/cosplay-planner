@@ -1,5 +1,3 @@
-import serverState from "../../serverState";
-
 export async function GET(){
     return new Response('WIP');
 }

@@ -1,5 +1,4 @@
 'use server'
-import serverState from "../api/serverState";
 import type Cosplay from "@/type-definitions/Cosplay";
 
 const generateId = (c: Cosplay[]) => c.reduce((prev, {id}) => Math.max(prev, id + 1), 1);
@@ -16,8 +15,10 @@ function validateCosplay(v: unknown): v is Cosplay {
     return false;
 }
 
+const DUMMY: {cosplays: Cosplay[]} = {cosplays: []};
+
 export default async function createCosplay(f: FormData) {
-    const {cosplays} = serverState;
+    const {cosplays} = DUMMY;
     const maybeCosplay = {
         id: generateId(cosplays),
         name: f.get('name'),
