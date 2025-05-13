@@ -1,6 +1,6 @@
 import graphene
 from graphene_django import DjangoObjectType
-from cosplayplanner.models.cosplay import Cosplay
+from cosplays.models import Cosplay
 
 class CosplayType(DjangoObjectType):
     class Meta:
@@ -21,4 +21,4 @@ class Query(graphene.ObjectType):
 class Mutation(graphene.ObjectType):
     pass
 
-schema = graphene.Schema(query=Query, mutation=Mutation)
+schema = graphene.Schema(query=Query)

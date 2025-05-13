@@ -1,12 +1,18 @@
 import { BACKEND_AT } from "@/env";
+import type Cosplay from "@/type-definitions/Cosplay";
 
 export async function GET(){
     const r = await fetch(BACKEND_AT +'/graph', {
         method: 'POST',
-        body: `query { cosplays }`
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            query: `query {cosplays {id, name, description}}`
+        })
     });
-    console.log(await r.text());
-    return Response.json([]);
+    const j = await r.json() as {data: {cosplays: Cosplay[]}};
+    return Response.json(j.data.cosplays);
 }
 
 export async function POST(){

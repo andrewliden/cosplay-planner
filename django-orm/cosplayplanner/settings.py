@@ -39,13 +39,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-# Application definition
-
 USER_APPS = [
-    'cosplayplanner.models'
+    'cosplays'
 ]
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
