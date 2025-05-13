@@ -17,8 +17,24 @@ class Query(graphene.ObjectType):
     def resolve_cosplay_by_id(root, info, id):
         return Cosplay.objects.get(pk=id)
 
+class CreateCosplayMutation(graphene.Mutation):
+    class Arguments:
+        name = graphene.String(required=True)
+        description = graphene.String(required=True)
+    
+    cosplay = graphene.Field(CosplayType)
+
+    @classmethod
+    def mutate(cls, root, info, name, description):
+        created = Cosplay.objects.create(
+            name = name,
+            description = description
+        )
+        created.save()
+        return CreateCosplayMutation(cosplay=created)
+
 
 class Mutation(graphene.ObjectType):
-    pass
+    create_cosplay = CreateCosplayMutation.Field()
 
-schema = graphene.Schema(query=Query)
+schema = graphene.Schema(query=Query, mutation=Mutation)

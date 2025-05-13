@@ -14,7 +14,3 @@ export async function GET(){
     const j = await r.json() as {data: {cosplays: Cosplay[]}};
     return Response.json(j.data.cosplays);
 }
-
-export async function POST(){
-    return new Response('WIP');
-}

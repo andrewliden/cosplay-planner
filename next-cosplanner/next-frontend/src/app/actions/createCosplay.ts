@@ -1,33 +1,22 @@
 'use server'
-import type Cosplay from "@/type-definitions/Cosplay";
-
-const generateId = (c: Cosplay[]) => c.reduce((prev, {id}) => Math.max(prev, id + 1), 1);
-
-function validateCosplay(v: unknown): v is Cosplay {
-    if(v && typeof v === 'object') {
-        return (
-            'id' in v && typeof v.id === 'number' &&
-            'name' in v && typeof v.name === 'string' &&
-            'description' in v && typeof v.description === 'string' &&
-            'referenceImage' in v && (typeof v.referenceImage === 'string' || v.referenceImage === null)
-        );
-    }
-    return false;
-}
-
-const DUMMY: {cosplays: Cosplay[]} = {cosplays: []};
+import { BACKEND_AT } from "@/env";
 
 export default async function createCosplay(f: FormData) {
-    const {cosplays} = DUMMY;
-    const maybeCosplay = {
-        id: generateId(cosplays),
-        name: f.get('name'),
-        description: f.get('description'),
-        referenceImage: f.get('referenceImage') || null
-    };
-    if(validateCosplay(maybeCosplay)) {
-        cosplays.push(maybeCosplay);
-    } else {
-        throw new Error('Invalid data');
-    }
+    const r = await fetch(BACKEND_AT +'/graph', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            mutation: `mutation {
+                createNew: createCosplay(
+                    name: "${f.get('name')}",
+                    description: "${f.get('description')}"
+                )
+            }`
+        })
+    });
+    const j = await r.json();
+    console.log(j);
+    return j;
 }
