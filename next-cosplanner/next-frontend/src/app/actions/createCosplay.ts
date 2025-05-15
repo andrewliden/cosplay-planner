@@ -10,9 +10,13 @@ export default async function createCosplay(f: FormData) {
             ) { cosplay { id } }
         }
     `;
-    const variables = {
+    const rawVariables = {
         name: f.get('name'),
         description: f.get('description')
+    };
+    const variables = {
+        name: typeof rawVariables.name === 'string' ? rawVariables.name : null,
+        description: typeof rawVariables.description === 'string' ? rawVariables.description : null
     };
     
     const r = await fetch(BACKEND_AT +'/graph', {
