@@ -2,6 +2,8 @@
 import { BACKEND_AT } from "@/env";
 
 export default async function createCosplay(f: FormData) {
+    // There's a pretty obvious query injection risk here.
+    // TODO - get familiar with graph ql query injection safety practices and revisit this.
     const r = await fetch(BACKEND_AT +'/graph', {
         method: 'POST',
         headers: {
