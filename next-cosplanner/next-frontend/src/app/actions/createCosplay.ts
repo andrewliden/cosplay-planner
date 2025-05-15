@@ -2,21 +2,25 @@
 import { BACKEND_AT } from "@/env";
 
 export default async function createCosplay(f: FormData) {
-    // There's a pretty obvious query injection risk here.
-    // TODO - get familiar with graph ql query injection safety practices and revisit this.
+    const query = `
+        mutation CreateNew($name: String!, $description: String!) {
+            createCosplay(
+                name: $name,
+                description: $description
+            ) { cosplay { id } }
+        }
+    `;
+    const variables = {
+        name: f.get('name'),
+        description: f.get('description')
+    };
+    
     const r = await fetch(BACKEND_AT +'/graph', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            mutation: `mutation {
-                createNew: createCosplay(
-                    name: "${f.get('name')}",
-                    description: "${f.get('description')}"
-                )
-            }`
-        })
+        body: JSON.stringify({query, variables})
     });
     const j = await r.json();
     console.log(j);
