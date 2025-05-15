@@ -27,6 +27,5 @@ export default async function createCosplay(f: FormData) {
         body: JSON.stringify({query, variables})
     });
     const j = await r.json();
-    console.log(j);
     return j;
 }
