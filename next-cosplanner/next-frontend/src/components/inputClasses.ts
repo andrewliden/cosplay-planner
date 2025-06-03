@@ -1,0 +1,1 @@
+export default 'bg-slate-950 rounded-lg border border-b-3 border-slate-400 p-2 hover:border-primary-500';

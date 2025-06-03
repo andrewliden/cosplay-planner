@@ -2,6 +2,7 @@
 import {useState} from 'react';
 import Input from './Input';
 import createCosplay from '@/app/actions/createCosplay';
+import Textarea from './Textarea';
 
 export default function CreateNewCosplay(){
     const [isCreating, setIsCreating] = useState(false);
@@ -24,16 +25,9 @@ export default function CreateNewCosplay(){
                     </label>
                     <label className='flex flex-col'>
                         Description
-                        <textarea
+                        <Textarea
                             required
                             name='description'
-                        />
-                    </label>
-                    <label className='flex flex-col'>
-                        Reference image
-                        <Input
-                            type='url'
-                            name='referenceImage'
                         />
                     </label>
                 </div>
