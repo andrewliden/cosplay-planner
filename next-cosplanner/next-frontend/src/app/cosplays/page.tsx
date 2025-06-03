@@ -8,7 +8,7 @@ function ListCosplay({data}: {data: Cosplay}) {
     return (
         <a href={`/cosplays/${data.id}/`}>
             <div className='bg-gray-800 p-2 w-56 rounded-lg'>
-                <h2>{data.name}</h2>
+                <h2 className='text-xl'>{data.name}</h2>
                 <p>{data.description}</p>
             </div>
         </a>
