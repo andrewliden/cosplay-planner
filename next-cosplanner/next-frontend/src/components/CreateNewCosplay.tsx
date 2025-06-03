@@ -1,5 +1,6 @@
 'use client'
 import {useState} from 'react';
+import Input from './Input';
 import createCosplay from '@/app/actions/createCosplay';
 
 export default function CreateNewCosplay(){
@@ -7,7 +8,7 @@ export default function CreateNewCosplay(){
     if(isCreating) {
         return (
             <form
-                className='rounded-lg bg-gray-800 p-2'
+                className='rounded-lg bg-gray-800 p-2 my-2'
                 action={createCosplay}
             >
                 <h2 className='text-xl'>
@@ -16,7 +17,7 @@ export default function CreateNewCosplay(){
                 <div className='flex gap-2'>
                     <label className='flex flex-col'>
                         Name
-                        <input
+                        <Input
                             required
                             name='name'
                         />
@@ -30,7 +31,7 @@ export default function CreateNewCosplay(){
                     </label>
                     <label className='flex flex-col'>
                         Reference image
-                        <input
+                        <Input
                             type='url'
                             name='referenceImage'
                         />

@@ -7,7 +7,7 @@ import CreateNewCosplay from "@/components/CreateNewCosplay";
 function ListCosplay({data}: {data: Cosplay}) {
     return (
         <a href={`/cosplays/${data.id}/`}>
-            <div className='bg-gray-800 p-1'>
+            <div className='bg-gray-800 p-2 w-56 rounded-lg'>
                 <h2>{data.name}</h2>
                 <p>{data.description}</p>
             </div>
@@ -20,8 +20,7 @@ export default async function CosplaysPage() {
     const j = await req.json() as Cosplay[];
     return (
         <ContentBox label='My cosplays'>
-            <CreateNewCosplay />
-            <div className='flex'>
+            <div className='flex gap-2 my-2'>
                 {j.length === 0 ?
                     <p>It looks like you don&apos;t have any cosplays yet.</p>
                     :
@@ -33,6 +32,7 @@ export default async function CosplaysPage() {
                     )
                 }
             </div>
+            <CreateNewCosplay />
         </ContentBox>
     );
 }
