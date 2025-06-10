@@ -1,4 +1,4 @@
 export default interface CosplayFormErrors {
-    name: string|null,
-    description: string|null
+    name: string[]|null,
+    description: string[]|null
 }

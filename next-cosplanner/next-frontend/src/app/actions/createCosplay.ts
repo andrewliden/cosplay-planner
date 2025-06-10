@@ -1,9 +1,9 @@
 'use server'
-import { redirect } from "next/navigation";
 import { BACKEND_AT } from "@/env";
 import type CosplayFormErrors from "@/type-definitions/CosplayFormErrors";
 import type FormActionState from "@/type-definitions/FormActionState";
 import type Cosplay from "@/type-definitions/Cosplay";
+import { z } from "zod/v4";
 
 const query = `
     mutation CreateNew($name: String!, $description: String!) {
@@ -14,22 +14,27 @@ const query = `
     }
 `;
 
-const validateName = (name: unknown) => typeof name === 'string' ? (name ? null : 'Name is required') : 'Name is an unexpected data type';
-const validateDescription = (description: unknown) => typeof description === 'string' ? (description ? null : 'Description is required') : 'Description is an unexpected data type';
-
-const validateVariables = (variables: {name: unknown, description: unknown}) => ({
-    name: validateName(variables.name),
-    description: validateDescription(variables.description)
+const inputSchema = z.object({
+    name: z.string('Name must be a string').nonempty('Name is required'),
+    description: z.string('Description must be a string').nonempty('Description is required')
 });
 
-export default async function createCosplay(_: FormActionState<CosplayFormErrors, Cosplay>, f: FormData) {
-    const variables = {
-        name: f.get('name'),
-        description: f.get('description')
-    };
+const outputSchema = z.object({
+    data: z.object({
+        createCosplay: z.object({
+            cosplay: z.object({
+                id: z.number()
+            })
+        })
+    })
+});
 
-    const errors = validateVariables(variables);
-    if(errors.name === null && errors.description === null) {
+export default async function createCosplay(_: FormActionState<CosplayFormErrors, number>, f: FormData) {
+    try {
+        const variables = inputSchema.parse({
+            name: f.get('name'),
+            description: f.get('description')
+        });
         const r = await fetch(BACKEND_AT +'/graph', {
             method: 'POST',
             headers: {
@@ -38,17 +43,27 @@ export default async function createCosplay(_: FormActionState<CosplayFormErrors
             body: JSON.stringify({query, variables})
         });
         
-        const j = await r.json() as Cosplay;
+        const j = await r.json() as unknown;
+        const output = outputSchema.parse(j);
         
         return {
-            errors,
+            errors: {name: null, description: null},
             status: 1,
-            data: j
+            data: output.data.createCosplay.cosplay.id
         };
-    } else {
-        return {
-            errors,
-            status: 2
-        };
+    } catch(e) {
+        if(e instanceof z.ZodError) {
+            const errors = {name: [], description: []};
+            // TODO - figure out the best way to transform ZodError to what I want.
+            return {
+                errors,
+                status: 2
+            };
+        } else {
+            return {
+                errors: {name: ['An unexpected error has occurred'], description: null},
+                status: 2
+            };
+        }
     }
 }

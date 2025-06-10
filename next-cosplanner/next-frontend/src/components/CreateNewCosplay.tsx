@@ -10,7 +10,7 @@ import type CosplayFormErrors from '@/type-definitions/CosplayFormErrors';
 import type Cosplay from '@/type-definitions/Cosplay';
 import FormFeedback from './FormFeedback';
 
-const initialState: FormActionState<CosplayFormErrors, Cosplay> = {
+const initialState: FormActionState<CosplayFormErrors, number> = {
     status: 0,
     errors: {
         name: null,
