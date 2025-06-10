@@ -7,6 +7,7 @@ export default async function CosplayIdPage({params}: {params: Promise<{cosplayI
     const {cosplayId} = await params;
     const req = await fetch(`${HOSTED_AT}/api/cosplay/${cosplayId}`);
     const j = await req.json() as Cosplay|null;
+
     if(j) {
         return (
             <ContentBox label={j.name}>
