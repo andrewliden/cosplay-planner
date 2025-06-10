@@ -10,7 +10,10 @@ export default async function CosplayIdPage({params}: {params: Promise<{cosplayI
 
     if(j) {
         return (
-            <ContentBox label={j.name}>
+            <ContentBox
+                action={<button>Edit</button>}
+                label={j.name}
+            >
                 <p>{j.description}</p>
             </ContentBox>
         );
