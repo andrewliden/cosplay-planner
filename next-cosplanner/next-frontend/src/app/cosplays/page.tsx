@@ -20,7 +20,7 @@ export default async function CosplaysPage() {
     const j = await req.json() as Cosplay[];
     return (
         <ContentBox label='My cosplays'>
-            <div className='flex gap-2 my-2'>
+            <div className='flex gap-2 my-2 flex-wrap'>
                 {j.length === 0 ?
                     <p>It looks like you don&apos;t have any cosplays yet.</p>
                     :
